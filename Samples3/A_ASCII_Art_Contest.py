@@ -1,0 +1,1 @@
+print(f"check again" if (a:=sorted(list(map(int,input().split())))) and a[-1]-a[0]>=10 else f"final {a[1]}")

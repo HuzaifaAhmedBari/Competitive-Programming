@@ -1,0 +1,54 @@
+//Maqsad Nahi Bhoolna
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long int
+#define ld long double
+#define nl cout<<endl
+#define re return 0
+#define vi vector<int>
+#define vii vector<vector<int>>
+#define vl vector<ll>
+#define vll vector<vector<ll>>
+#define vb vector<bool>
+#define vbb vector<vector<bool>>
+#define all(vec) vec.begin(), vec.end()
+#define sahi(vec) sort(vec.begin(),vec.end())
+#define ulta(vec) sort(vec.begin(),vec.end(),greater<typename decltype(vec)::value_type>())
+#define fori(a,b) for(int i=a;i<b;i++)
+#define forj(a,b) for(int j=a;j<b;j++)
+#define fork(a,b) for(int k=a;k<b;k++)
+#define forr(a,b) for(int i=a;i>=b;i--)
+#define yes(expr) (expr)? cout<<"yes" : cout<<"no"
+#define Yes(expr) (expr)? cout<<"Yes" : cout<<"No"
+#define YES(expr) (expr)? cout<<"YES" : cout<<"NO"
+#define input(vec) fori(0,vec.size()) cin>>vec[i]
+#define print(vec) for(auto x : vec) cout<<x<<" "
+#define io ios_base::sync_with_stdio(false);cin.tie(nullptr)
+int main()
+{
+    io;
+    int n,m;
+    cin>>n>>m;
+    vl arr(n);
+    input(arr);
+    sahi(arr);
+    ll ans1=LLONG_MAX,ans2=LLONG_MAX,temp1=0,temp2=0;
+    fori(0,n)
+    {
+        if(i!=n-1)
+            temp1=arr[i] + (arr[n-1] -arr[i+1]);
+        else
+            temp1 = arr[i] - arr[0];
+        if(i!=0)
+            temp2=arr[n-1] - arr[i] + arr[i-1];
+        else if(i==n-1)
+            temp2 = arr[n-2];
+        else
+            temp2=arr[n-1] - arr[0];
+        ans1=min(ans1,temp1);
+        ans2=min(ans1,temp2);
+    }
+    cout<<min(ans1,ans2);
+    nl;
+    return 0;
+}
