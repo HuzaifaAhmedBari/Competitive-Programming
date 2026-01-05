@@ -102,7 +102,38 @@ ll lcm(ll a, ll b)	{ return (a*b)/gcd(a,b); }
 int main()
 {
     io;
-    YES("((sin(1)+3)sin(1-sin(2))+2)sin(1-sin(2+sin(3)))+1"=="((sin(1)+3)sin(1-sin(2))+2)sin(1-sin(2+sin(3)))+1");
-    nl;
+    ll t = 1;
+    cin>>t;
+    forj(1,t+1)
+    {
+        cout<<"Case "<<j<<": ";
+        ll n;
+        cin>>n;
+        vl arr(n);
+        cin>>arr;
+        if(n==1)
+        {
+            cout<<arr.front();
+            nl;
+            continue;
+        }
+        else if(n==2)
+        {
+            cout<<max(arr[0],arr[1]);
+            nl;
+            continue;
+        }
+        vl dp(n,0);
+        dp[0] = arr[0];
+        dp[1] = arr[1];
+        fori(2,n)
+        {
+            dp[i] = max(dp[i],arr[i]+dp[i-2]);
+            if(i!=2)
+                dp[i] = max(dp[i],arr[i]+dp[i-3]);
+        }
+        cout<<*max_element(all(dp));
+        nl;
+    }
     return 0;
 }

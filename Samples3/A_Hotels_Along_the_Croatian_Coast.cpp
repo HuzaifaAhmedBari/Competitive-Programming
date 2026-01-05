@@ -102,7 +102,22 @@ ll lcm(ll a, ll b)	{ return (a*b)/gcd(a,b); }
 int main()
 {
     io;
-    YES("((sin(1)+3)sin(1-sin(2))+2)sin(1-sin(2+sin(3)))+1"=="((sin(1)+3)sin(1-sin(2))+2)sin(1-sin(2+sin(3)))+1");
+    ll n,m;
+    cin>>n>>m;
+    vl arr(n);
+    cin>>arr;
+    ll sum = 0, mx = 0,l=0;
+    fori(0,n)
+    {
+        sum+=arr[i];
+        while(l<n and sum>m)
+        {
+            sum-=arr[l];
+            l++;
+        }
+        mx = max(mx,sum);
+    }
+    cout<<mx;
     nl;
     return 0;
 }

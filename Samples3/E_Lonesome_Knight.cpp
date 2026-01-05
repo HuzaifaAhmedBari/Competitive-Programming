@@ -102,7 +102,37 @@ ll lcm(ll a, ll b)	{ return (a*b)/gcd(a,b); }
 int main()
 {
     io;
-    YES("((sin(1)+3)sin(1-sin(2))+2)sin(1-sin(2+sin(3)))+1"=="((sin(1)+3)sin(1-sin(2))+2)sin(1-sin(2+sin(3)))+1");
-    nl;
+    ll t = 1;
+    cin>>t;
+    while(t--)
+    {
+        char a;
+        cin>>a;
+        ll x,y;
+        cin>>y;
+        x = a-'a'+1;
+        ll ans = 0;
+        function<bool(ll,ll)> safe = [&](ll a, ll b) {
+            return (a>=1 and a<=8 and b>=1 and b<=8);
+        };
+        if(safe(x+2,y+1))
+            ans++;
+        if(safe(x+2,y-1))
+            ans++;
+        if(safe(x-2,y+1))
+            ans++;
+        if(safe(x-2,y-1))
+            ans++;
+        if(safe(x+1,y+2))
+            ans++;
+        if(safe(x-1,y+2))
+            ans++;
+        if(safe(x+1,y-2))
+            ans++;
+        if(safe(x-1,y-2))
+            ans++;
+        cout<<ans;
+        nl;
+    }
     return 0;
 }

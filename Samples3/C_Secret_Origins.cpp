@@ -102,7 +102,40 @@ ll lcm(ll a, ll b)	{ return (a*b)/gcd(a,b); }
 int main()
 {
     io;
-    YES("((sin(1)+3)sin(1-sin(2))+2)sin(1-sin(2+sin(3)))+1"=="((sin(1)+3)sin(1-sin(2))+2)sin(1-sin(2+sin(3)))+1");
-    nl;
+    ll t = 1;
+    cin>>t;
+    forj(1,t+1)
+    {
+        cout<<"Case "<<j<<": ";
+        ll n;
+        cin>>n;
+        ll x = 0LL;
+        bool flag=false;
+        fori(0,62)
+        {
+            if(((n>>i)&1) and ((n>>(i+1))&1)==0 and not flag)
+            {
+                x|=(1LL<<(i+1));
+                flag=true;
+                ll c = 0;
+                fork(0,i)
+                {
+                    if((n>>k)&1)
+                        c++;
+                }
+                ll d = 0;
+                while(c!=0)
+                {
+                    c--;
+                    x|=(1LL<<d);
+                    d++;
+                }
+            }
+            else if(((n>>i)&1) and flag)
+                x|=(1LL<<i);
+        }
+        cout<<x;
+        nl;
+    }
     return 0;
 }
