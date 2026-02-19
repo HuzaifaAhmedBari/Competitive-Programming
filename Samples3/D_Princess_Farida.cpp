@@ -111,7 +111,13 @@ int main()
         cin>>n;
         vl arr(n);
         cin>>arr;
-        if(n==1)
+        if(n==0)
+        {
+            cout<<0;
+            nl;
+            continue;
+        }
+        else if(n==1)
         {
             cout<<arr.front();
             nl;
@@ -125,14 +131,12 @@ int main()
         }
         vl dp(n,0);
         dp[0] = arr[0];
-        dp[1] = arr[1];
+        dp[1] = max(arr[0],arr[1]);
         fori(2,n)
         {
-            dp[i] = max(dp[i],arr[i]+dp[i-2]);
-            if(i!=2)
-                dp[i] = max(dp[i],arr[i]+dp[i-3]);
+            dp[i] = max(arr[i]+dp[i-2],dp[i-1]);
         }
-        cout<<*max_element(all(dp));
+        cout<<dp[n-1];
         nl;
     }
     return 0;

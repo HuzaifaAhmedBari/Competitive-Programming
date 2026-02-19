@@ -1,4 +1,6 @@
 Templates/
+TRD/
+*.zip
 *.docx
 *.pdf
 *.txt
