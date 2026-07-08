@@ -1,4 +1,4 @@
-# 💠 Competitive Programming Portfolio
+# 💠 Competitive Programming
 
 Welcome to my competitive programming repository! This workspace contains my solutions to various onsite and online contests.
 
