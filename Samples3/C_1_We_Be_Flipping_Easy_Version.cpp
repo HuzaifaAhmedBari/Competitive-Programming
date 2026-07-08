@@ -69,21 +69,32 @@ ostream& operator<<(ostream &out, const vector<T> &v) {
 int main()
 {
     io;
-    ll n;
-    cin>>n;
-    vl arr(n);
-    cin>>arr;
-    ll l=0,r=n-1,x=0,y=0,ans=0;
-    while(l<=r)
+    ll t = 1;
+    cin>>t;
+    while(t--)
     {
-        if(x<=y)
-            x+=arr[l++];
-        else
-            y+=arr[r--];
-        if(x==y)
-            ans = max(ans,x);
+        ll n;
+        cin>>n;
+        vl arr(n);
+        cin>>arr;
+        ll cnt = 0;
+        vl ans;
+        bool flag=false;
+        forr(n-1,0)
+        {
+            if(flag)
+                arr[r]=-arr[r];
+            if(arr[r]>0)
+            {
+                cnt++;
+                ans.push_back(r+1);
+                flag=!flag;
+            }
+        }
+        cout<<cnt;
+        nl;
+        cout<<ans;
+        nl;
     }
-    cout<<ans;
-    nl;
     return 0;
 }

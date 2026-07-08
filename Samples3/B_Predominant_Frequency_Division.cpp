@@ -69,20 +69,72 @@ ostream& operator<<(ostream &out, const vector<T> &v) {
 int main()
 {
     io;
-    ll n,m;
-    cin>>n>>m;
-    vll adj(n+1);
-    fori(0,m)
+    ll t = 1;
+    cin>>t;
+    while(t--)
     {
-        ll u,v;
-        cin>>u>>v;
-        adj[u].push_back(v);
-        adj[v].push_back(u);
+        ll l1=0,l2=0,l3=0,r1=0,r2=0,r3=0;
+        ll a=0,b=0,c=0;
+        ll n;
+        cin>>n;
+        vl arr(n);
+        cin>>arr;
+        while(r1<n)
+        {
+            if(arr[r1]==1)
+                a++;
+            else
+                a--;
+            r1++;
+            if(a>=0)
+                break;
+        }
+        r2 = r1;
+        l2 = r1;
+        while(r2<n)
+        {
+            if(arr[r2]==3)
+                b--;
+            else
+                b++;
+            r2++;
+            if(b>=0)
+                break;
+        }
+        if(r2<n)
+        {
+            YES(1);
+            nl;
+            continue;
+        }
+        vl suf(n,-1);
+        forr(n-2,0)
+        {
+            suf[r] = suf[r+1];
+            if(arr[r]==3)
+                suf[r]-=1;
+            else
+            {
+                if(suf[r]<0)
+                    suf[r] = 0;
+                suf[r]++;
+            }
+            if(suf[r]<0)
+                suf[r] = -1;
+        }
+        ll z = 0;
+        bool f = false;
+        fori(0,n-2)
+        {
+            if(arr[i]==1)
+                z++;
+            else
+                z--;
+            if(z>=0 and suf[i+1]>=0)
+                f = true;
+        }
+        YES(f);
+        nl;
     }
-    ll mn = LLONG_MAX;
-    fori(1,n+1)
-        mn = min(mn,(ll)adj[i].size());
-    cout<<mn;
-    nl;
     return 0;
 }

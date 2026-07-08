@@ -65,20 +65,18 @@ ostream& operator<<(ostream &out, const vector<T> &v) {
     for (auto &x : v) out << x << " ";
     return out;
 }
-using vi = vector<ll>;
-using State = vector<ll>;
 
-//////////////////////////////////////////////////////////////////
-// Replace this with your own solution.
-// It should return the answer for one test case.
-//////////////////////////////////////////////////////////////////
-int solveMine(State a, int k)
+int main()
 {
-    // COPY YOUR CODE HERE
-    //Maqsad Nahi Bhoolna
-    vl arr = a;
-    ll n = arr.size();
-
+    io;
+    ll t = 1;
+    cin>>t;
+    while(t--)
+    {
+        ll n,k;
+        cin>>n>>k;
+        vl arr(n);
+        cin>>arr;
         vl cnt;
         ll cur = -1;
         fori(0,n)
@@ -184,119 +182,17 @@ int solveMine(State a, int k)
                 }
             }
         }
-        return ans;
+        cout<<ans;
+        nl;
     }
-//////////////////////////////////////////////////////////////////
-
-// BFS to enumerate all reachable arrays
-set<State> reachable(State start)
-{
-    queue<State> q;
-    set<State> vis;
-
-    q.push(start);
-    vis.insert(start);
-
-    while(!q.empty())
-    {
-        State cur = q.front();
-        q.pop();
-        if(cur.size() > 8) continue;
-
-        int n = cur.size();
-
-        vector<int> mark(n);
-        mark[0]=1;
-        for(int i=1;i<n;i++)
-            if(cur[i]!=cur[i-1])
-                mark[i]=1;
-
-        // delete
-        {
-            State nxt;
-            for(int i=0;i<n;i++)
-                if(!mark[i])
-                    nxt.push_back(cur[i]);
-
-            if(!nxt.empty() && !vis.count(nxt))
-            {
-                vis.insert(nxt);
-                q.push(nxt);
-            }
-        }
-
-        // duplicate
-        {
-            State nxt;
-            for(int i=0;i<n;i++)
-            {
-                nxt.push_back(cur[i]);
-                if(mark[i])
-                    nxt.push_back(cur[i]);
-            }
-
-            if(nxt.size() <= 8 && !vis.count(nxt))
-{
-    vis.insert(nxt);
-    q.push(nxt);
-}
-        }
-    }
-
-    return vis;
+    return 0;
 }
 
-int brute(State a,int k)
-{
-    auto S=reachable(a);
-
-    int ans=0;
-    for(auto &x:S)
-        if((int)x.size()==k)
-            ans++;
-
-    return ans;
-}
-
-void gen(int pos,int n,int last,State &cur)
-{
-    if(pos==n)
-    {
-        for(int k=1;k<=8;k++)
-        {
-            int b=brute(cur,k);
-            int m=solveMine(cur,k);
-
-            if(b!=m)
-            {
-                cout<<"Mismatch!\n";
-                cout<<"n="<<n<<" k="<<k<<"\n";
-                for(int x:cur) cout<<x<<" ";
-                cout<<"\n";
-
-                cout<<"Expected = "<<b<<"\n";
-                cout<<"Mine = "<<m<<"\n";
-                exit(0);
-            }
-        }
-        return;
-    }
-
-    for(int x=last;x<=3;x++)
-    {
-        cur.push_back(x);
-        gen(pos+1,n,x,cur);
-        cur.pop_back();
-    }
-}
-
-int main()
-{
-    for(int n=1;n<=6;n++)
-    {
-        State cur;
-        gen(0,n,1,cur);
-    }
-
-    cout<<"No mismatch found.\n";
-}
+/*
+10 7
+1 1 1 2 2 3 3 3 3 4
+1 1 2 3 3 3
+1 3 3
+1 1 3 3 3
+1 1 1 3 3 3 3
+*/
