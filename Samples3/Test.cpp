@@ -1,302 +1,141 @@
-//Maqsad Nahi Bhoolna
 #include <bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
 using namespace std;
-using namespace __gnu_pbds;
-template <typename T>
-using min_heap = priority_queue<T, vector<T>, greater<T>>;
-template <typename T>
-using max_heap = priority_queue<T>;
-template <typename T>
-using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
-//find_by_order(k): returns iterator to k-th smallest element (0-based)
-//order_of_key(x): returns number of elements strictly less than x
-#define ll long long int
-#define ld long double
-#define nl cout<<"\n"
-#define re return 0
-#define fs first
-#define sc second
-#define MOD 1000000007
-#define pii pair<ll,ll>
-#define vl vector<ll>
-#define vll vector<vector<ll>>
-#define vpii vector<pair<ll,ll>>
-#define vvpii vector<vector<pair<ll,ll>>>
-#define vb vector<bool>
-#define vbb vector<vector<bool>>
-#define vc vector<char>
-#define vcc vector<vector<char>>
-#define vs vector<string>
-#define vss vector<vector<string>>
-#define all(vec) vec.begin(), vec.end()
-#define allr(vec) vec.rbegin(), vec.rend()
-#define sahi(vec) sort(vec.begin(),vec.end())
-#define ulta(vec) sort(vec.begin(),vec.end(),greater<typename decltype(vec)::value_type>())
-#define fori(a,b) for(ll i=a;i<b;i++)
-#define forj(a,b) for(ll j=a;j<b;j++)
-#define fork(a,b) for(ll k=a;k<b;k++)
-#define forr(a,b) for(ll r=a;r>=b;r--)
-#define yes(expr) (expr)? cout<<"yes" : cout<<"no"
-#define Yes(expr) (expr)? cout<<"Yes" : cout<<"No"
-#define YES(expr) (expr)? cout<<"YES" : cout<<"NO"
-#define print(vec) for(auto x : vec) cout<<x<<" "
-#define io ios_base::sync_with_stdio(false);cin.tie(nullptr)
+using ll = long long;
 
-template <typename A, typename B>
-istream& operator>>(istream &in, pair<A,B> &p) {
-    in >> p.first >> p.second;
-    return in;
-}
-template <typename T>
-istream& operator>>(istream &in, vector<T> &v) {
-    for (auto &x : v) in >> x;
-    return in;
-}
+//---------------- YOUR SOLUTION ----------------//
 
-template <typename A, typename B>
-ostream& operator<<(ostream &out, const pair<A,B> &p) {
-    out << p.first << " " << p.second;
-    return out;
-}
-template <typename T>
-ostream& operator<<(ostream &out, const vector<T> &v) {
-    for (auto &x : v) out << x << " ";
-    return out;
-}
-using vi = vector<ll>;
-using State = vector<ll>;
+vector<ll> solve(vector<ll> b) {
+    // Paste your code here.
+    // Return {} if you output -1.
 
-//////////////////////////////////////////////////////////////////
-// Replace this with your own solution.
-// It should return the answer for one test case.
-//////////////////////////////////////////////////////////////////
-int solveMine(State a, int k)
-{
-    // COPY YOUR CODE HERE
-    //Maqsad Nahi Bhoolna
-    vl arr = a;
-    ll n = arr.size();
+    int n = b.size();
 
-        vl cnt;
-        ll cur = -1;
-        fori(0,n)
-        {
-            if(arr[i]==cur)
-                cnt.back()++;
-            else
-                cur=arr[i],cnt.push_back(1LL);
+    vector<pair<ll,ll>> a(n);
+    for(int i=0;i<n;i++)
+        a[i]={b[i],i};
+
+    sort(a.begin(),a.end());
+
+    ll cur=a[0].first,sum=0,mx=0;
+    vector<ll> ans(n,-1);
+    bool flag=true;
+
+    for(int i=0;i<n;i++){
+        ll cnt=0,l=i;
+        while(i<n && a[i].first==cur){
+            i++;
+            cnt++;
         }
-        ll sum = accumulate(all(cnt),0LL);
-        cur = 0;
-        ll ans = 0;
-        min_heap<ll> pq;
-        fori(0,cnt.size())
-            pq.push(cnt[i]);
-        bool f = false;
-        ll sm = sum;
-        if(sum<=k)
-        {
-            if(k==sum or (k>=sum and (k-sum)%cnt.size()==0))
-                ans++, f = true;
-        }
-        while(not pq.empty())
-        {
-            ll z = pq.top();
-            pq.pop();
-            z--;
-            sum--;
-            cur++;
-            if(z<=0)
-            {
-                f = false;
-                while(not pq.empty())
-                {
-                    ll x = pq.top();
-                    pq.pop();
-                    x-=cur;
-                    sum-=cur;
-                    if(x>0)
-                    {
-                        pq.push(x);
-                        break;
-                    }
-                }
-                if(sum==0 and pq.size()==0)
-                    continue;
-                
-                if(not f)
-                {
-                    ll tmp = (sum-(cur*(pq.size()-1)));
-                    // cout<<tmp;
-                    // nl;
-                    if(k==tmp or (k-tmp>=0 and (k-tmp)%pq.size()==0))
-                    {
-                //         cout<<(k==tmp);
-                //         nl;
-                //         cout<<((k-tmp)%pq.size()==0);
-                //         nl;
-                // cout<<sum<<" "<<z<<" "<<pq.size()<<" "<<cur;
-                // // nl;
-                // // cout<<k-(sum-(cur*(pq.size()-1)));
-                
-                // // nl;
-                // // cout<<(sum-(cur*(pq.size()-1)));
-                // // nl;
-                // // ll tmp=(sum-(cur*(pq.size()-1)));
-                // cout<<k-tmp;
-                // nl;
-                        // cout<<"a";
-                        ans++;
-                        f = true;
-                    }
-                }
-            }
-            else
-            {
-                pq.push(z);
-                if(not f)
-                {
-                    ll tmp = (sum-(cur*(pq.size()-1)));
-                    // cout<<tmp;
-                    // nl;
-                    if(k==tmp or (k-tmp>=0 and (k-tmp)%pq.size()==0))
-                    {
-                //         cout<<(k==tmp);
-                //         nl;
-                //         cout<<((k-tmp)%pq.size()==0);
-                //         nl;
-                // cout<<sum<<" "<<z<<" "<<pq.size()<<" "<<cur;
-                // // nl;
-                // // cout<<k-(sum-(cur*(pq.size()-1)));
-                
-                // // nl;
-                // // cout<<(sum-(cur*(pq.size()-1)));
-                // // nl;
-                // // ll tmp=(sum-(cur*(pq.size()-1)));
-                // cout<<k-tmp;
-                // nl;
-                        // cout<<"a";
-                        ans++;
-                        f = true;
-                    }
-                }
-            }
-        }
-        return ans;
-    }
-//////////////////////////////////////////////////////////////////
+        if(i==n) break;
 
-// BFS to enumerate all reachable arrays
-set<State> reachable(State start)
-{
-    queue<State> q;
-    set<State> vis;
+        ll z=a[i].first-sum;
 
-    q.push(start);
-    vis.insert(start);
-
-    while(!q.empty())
-    {
-        State cur = q.front();
-        q.pop();
-        if(cur.size() > 8) continue;
-
-        int n = cur.size();
-
-        vector<int> mark(n);
-        mark[0]=1;
-        for(int i=1;i<n;i++)
-            if(cur[i]!=cur[i-1])
-                mark[i]=1;
-
-        // delete
-        {
-            State nxt;
-            for(int i=0;i<n;i++)
-                if(!mark[i])
-                    nxt.push_back(cur[i]);
-
-            if(!nxt.empty() && !vis.count(nxt))
-            {
-                vis.insert(nxt);
-                q.push(nxt);
-            }
+        if(z>0 && z%cnt==0 && z/cnt>mx){
+            for(int j=l;j<i;j++)
+                ans[a[j].second]=z/cnt;
+            mx=z/cnt;
+        }else{
+            flag=false;
+            break;
         }
 
-        // duplicate
-        {
-            State nxt;
-            for(int i=0;i<n;i++)
-            {
-                nxt.push_back(cur[i]);
-                if(mark[i])
-                    nxt.push_back(cur[i]);
-            }
-
-            if(nxt.size() <= 8 && !vis.count(nxt))
-{
-    vis.insert(nxt);
-    q.push(nxt);
-}
-        }
+        sum+=(z/cnt)*cnt;
+        cur=a[i].first;
+        i--;
     }
 
-    return vis;
-}
+    if(!flag || sum!=a.back().first)
+        return {};
 
-int brute(State a,int k)
-{
-    auto S=reachable(a);
-
-    int ans=0;
-    for(auto &x:S)
-        if((int)x.size()==k)
-            ans++;
+    for(int i=0;i<n;i++)
+        if(ans[i]==-1)
+            ans[i]=mx+1;
 
     return ans;
 }
 
-void gen(int pos,int n,int last,State &cur)
-{
-    if(pos==n)
-    {
-        for(int k=1;k<=8;k++)
-        {
-            int b=brute(cur,k);
-            int m=solveMine(cur,k);
+//-----------------------------------------------//
 
-            if(b!=m)
-            {
-                cout<<"Mismatch!\n";
-                cout<<"n="<<n<<" k="<<k<<"\n";
-                for(int x:cur) cout<<x<<" ";
-                cout<<"\n";
-
-                cout<<"Expected = "<<b<<"\n";
-                cout<<"Mine = "<<m<<"\n";
-                exit(0);
-            }
-        }
-        return;
+vector<ll> shadow(vector<ll> a){
+    int n=a.size();
+    vector<ll> b(n);
+    for(int i=0;i<n;i++){
+        ll s=0;
+        for(int j=0;j<n;j++)
+            if(a[j]<a[i]) s+=a[j];
+        b[i]=s;
     }
-
-    for(int x=last;x<=3;x++)
-    {
-        cur.push_back(x);
-        gen(pos+1,n,x,cur);
-        cur.pop_back();
-    }
+    return b;
 }
 
-int main()
-{
-    for(int n=1;n<=6;n++)
-    {
-        State cur;
-        gen(0,n,1,cur);
-    }
+int main(){
 
-    cout<<"No mismatch found.\n";
+    srand(time(0));
+
+    while(true){
+
+        int n=1+rand()%6;
+
+        vector<ll> original(n);
+
+        for(int i=0;i<n;i++)
+            original[i]=1+rand()%4;
+
+        vector<ll> b=shadow(original);
+
+        // brute lexicographically smallest
+        vector<ll> best;
+        bool found=false;
+
+        vector<ll> cur(n);
+
+        function<void(int)> dfs=[&](int idx){
+
+            if(idx==n){
+
+                if(shadow(cur)==b){
+
+                    if(!found || cur<best){
+                        found=true;
+                        best=cur;
+                    }
+                    return;
+                }
+
+                return;
+            }
+
+            for(int x=1;x<=4;x++){
+                cur[idx]=x;
+                dfs(idx+1);
+            }
+        };
+
+        dfs(0);
+
+        vector<ll> mine=solve(b);
+
+        if((!found && !mine.empty()) ||
+           (found && mine.empty()) ||
+           (found && mine!=best)){
+
+            cout<<"Mismatch!"<<endl;
+
+            cout<<"Shadow : ";
+            for(auto x:b) cout<<x<<" ";
+            cout<<endl;
+
+            cout<<"Expected : ";
+            if(!found) cout<<-1;
+            else for(auto x:best) cout<<x<<" ";
+            cout<<endl;
+
+            cout<<"Mine : ";
+            if(mine.empty()) cout<<-1;
+            else for(auto x:mine) cout<<x<<" ";
+            cout<<endl;
+
+            return 0;
+        }
+    }
 }

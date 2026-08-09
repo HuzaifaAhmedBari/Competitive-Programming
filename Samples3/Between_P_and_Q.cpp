@@ -26,7 +26,10 @@ using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statisti
 #define vvpii vector<vector<pair<ll,ll>>>
 #define vb vector<bool>
 #define vbb vector<vector<bool>>
-#define us unordered_set<ll>
+#define vc vector<char>
+#define vcc vector<vector<char>>
+#define vs vector<string>
+#define vss vector<vector<string>>
 #define all(vec) vec.begin(), vec.end()
 #define allr(vec) vec.rbegin(), vec.rend()
 #define sahi(vec) sort(vec.begin(),vec.end())
@@ -51,11 +54,6 @@ istream& operator>>(istream &in, vector<T> &v) {
     for (auto &x : v) in >> x;
     return in;
 }
-template <typename A, typename B>
-istream& operator>>(istream &in, vector<pair<A,B>> &vp) {
-    for (auto &p : vp) in >> p.first >> p.second;
-    return in;
-}
 
 template <typename A, typename B>
 ostream& operator<<(ostream &out, const pair<A,B> &p) {
@@ -67,63 +65,23 @@ ostream& operator<<(ostream &out, const vector<T> &v) {
     for (auto &x : v) out << x << " ";
     return out;
 }
-template <typename A, typename B>
-ostream& operator<<(ostream &out, const vector<pair<A,B>> &vp) {
-    for (auto &p : vp) out << p.first << " " << p.second << "\n";
-    return out;
-}
 
-vb is_prime;
-void sieve(ll n) {
-    is_prime.assign(n+1,true);
-    is_prime[0] = is_prime[1] = false;
-    for(ll i=2;i*i<=n;i++) {
-        if(is_prime[i]) {
-            for(ll j=i*i;j<=n;j+=i)
-                is_prime[j] = false;
-        }
-    }
-}
-bool isprime(ll n) {
-    if(n<2)	return false;
-    if(n==2 || n==3)	return true;
-    if(n%2==0 || n%3==0)	return false;
-    for(ll i=5;i*i<=n;i++)
-    {
-        if(n%i==0 || n%(i+2)==0)
-            return false;
-    }
-    return true;
-}
-ll nextprime(ll n)	{ return (isprime(n))? n : nextprime(n+1); }
-ll sum_digits(ll n)	{ return (n<10)? n : n%10 + sum_digits(n/10); }
-ll gcd(ll a, ll b)	{ return (b==0)? a : gcd(b,a%b); }
-ll lcm(ll a, ll b)	{ return (a*b)/gcd(a,b); }
 int main()
 {
     io;
-    ll t = 1;
-    cin>>t;
-    while(t--)
+    ll n;
+    cin>>n;
+    vl a(n), b(n);
+    cin>>a>>b;
+    vl arr(n);
+    iota(all(arr),1LL);
+    ll cnt = 0;
+    do
     {
-        ll n,m;
-        cin>>n>>m;
-        vl arr(n);
-        cin>>arr;
-        sahi(arr);
-        ll mn = 0,mx=0;
-        fori(0,n)
-        {
-            if(arr[i]<m)
-                mn++;
-            else if(arr[i]>m)
-                mx++;
-        }
-        if(mx>mn)
-            cout<<m+1;
-        else
-            cout<<m-1;
-        nl;
-    }
+        if(arr>a and arr<b)
+            cnt++;
+    }while(next_permutation(all(arr)));
+    cout<<cnt;
+    nl;
     return 0;
 }

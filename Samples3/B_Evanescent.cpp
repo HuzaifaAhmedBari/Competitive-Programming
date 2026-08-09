@@ -26,7 +26,10 @@ using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statisti
 #define vvpii vector<vector<pair<ll,ll>>>
 #define vb vector<bool>
 #define vbb vector<vector<bool>>
-#define us unordered_set<ll>
+#define vc vector<char>
+#define vcc vector<vector<char>>
+#define vs vector<string>
+#define vss vector<vector<string>>
 #define all(vec) vec.begin(), vec.end()
 #define allr(vec) vec.rbegin(), vec.rend()
 #define sahi(vec) sort(vec.begin(),vec.end())
@@ -51,11 +54,6 @@ istream& operator>>(istream &in, vector<T> &v) {
     for (auto &x : v) in >> x;
     return in;
 }
-template <typename A, typename B>
-istream& operator>>(istream &in, vector<pair<A,B>> &vp) {
-    for (auto &p : vp) in >> p.first >> p.second;
-    return in;
-}
 
 template <typename A, typename B>
 ostream& operator<<(ostream &out, const pair<A,B> &p) {
@@ -67,38 +65,7 @@ ostream& operator<<(ostream &out, const vector<T> &v) {
     for (auto &x : v) out << x << " ";
     return out;
 }
-template <typename A, typename B>
-ostream& operator<<(ostream &out, const vector<pair<A,B>> &vp) {
-    for (auto &p : vp) out << p.first << " " << p.second << "\n";
-    return out;
-}
 
-vb is_prime;
-void sieve(ll n) {
-    is_prime.assign(n+1,true);
-    is_prime[0] = is_prime[1] = false;
-    for(ll i=2;i*i<=n;i++) {
-        if(is_prime[i]) {
-            for(ll j=i*i;j<=n;j+=i)
-                is_prime[j] = false;
-        }
-    }
-}
-bool isprime(ll n) {
-    if(n<2)	return false;
-    if(n==2 || n==3)	return true;
-    if(n%2==0 || n%3==0)	return false;
-    for(ll i=5;i*i<=n;i++)
-    {
-        if(n%i==0 || n%(i+2)==0)
-            return false;
-    }
-    return true;
-}
-ll nextprime(ll n)	{ return (isprime(n))? n : nextprime(n+1); }
-ll sum_digits(ll n)	{ return (n<10)? n : n%10 + sum_digits(n/10); }
-ll gcd(ll a, ll b)	{ return (b==0)? a : gcd(b,a%b); }
-ll lcm(ll a, ll b)	{ return (a*b)/gcd(a,b); }
 int main()
 {
     io;
@@ -106,51 +73,30 @@ int main()
     cin>>t;
     while(t--)
     {
+        ll n;
+        cin>>n;
         string s;
         cin>>s;
-        ll n = s.size();
-        bool flag=false,res=false;
-        fori(0,n)
+        ll ans = 1;
+        char cur = s[0];
+        bool flag=false,f=false;
+        fori(1,n)
         {
-            if(i<n-1 and ((s[i]=='*' and s[i+1]=='*') or (s[i]=='*' and s[i+1]=='<')))
-                res = true;
-            if(i>0 and (s[i]=='*' and s[i-1]=='>'))
-                res = true;
-            if(s[i]=='>')
-                flag=true;
-            if(flag and s[i]=='<')
-                res = true;
-        }
-        if(res)
-        {
-            cout<<-1;
-            nl;
-            continue;
-        }
-        ll mn=-1,mx=-1;
-        fori(0,n)
-        {
-            if(s[i]=='>')
+            if(i!=n-1)
             {
-                mn = i;
-                break;
+                if(s[i]!=s[i-1] and s[i]!=s[i+1])
+                {
+                    flag=true;
+                    if(s[i-1]==s[i+1])
+                        f=true;
+                }
             }
+            if(s[i]==cur)
+                continue;
+            cur = s[i];
+            ans++;
         }
-        forr(n-1,0)
-        {
-            if(s[r]=='<')
-            {
-                mx = n-(r+1);
-                break;
-            }
-        }
-        if(mn==-1 or mx==-1)
-        {
-            cout<<n;
-            nl;
-            continue;
-        }
-        cout<<max(mn,mx);
+        cout<<ans-flag-f;
         nl;
     }
     return 0;
